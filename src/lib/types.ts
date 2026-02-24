@@ -48,3 +48,9 @@ export interface TaxSummary {
   };
   totalNetCapitalGains: number;
 }
+
+export interface FinancialYear {
+  label: string;
+  startDate: Date;
+  endDate: Date;
+}

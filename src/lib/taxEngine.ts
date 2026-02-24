@@ -1,4 +1,4 @@
-import { RawTransaction, TaxLot, CoinSummary, TaxSummary } from "./types";
+import { RawTransaction, TaxLot, CoinSummary, TaxSummary, FinancialYear } from "./types";
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -138,4 +138,29 @@ export function calculateCoinSummaries(taxLots: TaxLot[]): {
     .sort((a, b) => a.capitalGains - b.capitalGains);
 
   return { gains, losses };
+}
+
+export function getAvailableFinancialYears(taxLots: TaxLot[]): FinancialYear[] {
+  const fySet = new Set<number>();
+
+  for (const lot of taxLots) {
+    const d = lot.dateSold;
+    // AU FY runs July 1 to June 30. If month >= July (6 in 0-indexed), FY starts this calendar year.
+    const fyStart = d.getMonth() >= 6 ? d.getFullYear() : d.getFullYear() - 1;
+    fySet.add(fyStart);
+  }
+
+  return Array.from(fySet)
+    .sort((a, b) => a - b)
+    .map((year) => ({
+      label: `FY ${year}-${String(year + 1).slice(-2)}`,
+      startDate: new Date(year, 6, 1),
+      endDate: new Date(year + 1, 5, 30, 23, 59, 59, 999),
+    }));
+}
+
+export function filterByFinancialYear(taxLots: TaxLot[], fy: FinancialYear): TaxLot[] {
+  return taxLots.filter(
+    (lot) => lot.dateSold >= fy.startDate && lot.dateSold <= fy.endDate
+  );
 }

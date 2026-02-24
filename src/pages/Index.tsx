@@ -1,21 +1,43 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { parseCSV } from "@/lib/csvParser";
-import { calculateTaxLots, calculateSummary, calculateCoinSummaries } from "@/lib/taxEngine";
-import { RawTransaction, TaxLot, TaxSummary, CoinSummary } from "@/lib/types";
+import { calculateTaxLots, calculateSummary, calculateCoinSummaries, getAvailableFinancialYears, filterByFinancialYear } from "@/lib/taxEngine";
+import { RawTransaction, TaxLot, TaxSummary, CoinSummary, FinancialYear } from "@/lib/types";
 import { CsvUpload } from "@/components/CsvUpload";
 import { SummaryCards } from "@/components/SummaryCards";
 import { PerformanceTables } from "@/components/PerformanceTables";
 import { TaxLedger } from "@/components/TaxLedger";
 import { ExportMenu } from "@/components/ExportMenu";
+import { FinancialYearSelector } from "@/components/FinancialYearSelector";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [taxLots, setTaxLots] = useState<TaxLot[] | null>(null);
-  const [summary, setSummary] = useState<TaxSummary | null>(null);
-  const [gains, setGains] = useState<CoinSummary[]>([]);
-  const [losses, setLosses] = useState<CoinSummary[]>([]);
+  const [allTaxLots, setAllTaxLots] = useState<TaxLot[] | null>(null);
+  const [allTransactions, setAllTransactions] = useState<RawTransaction[]>([]);
+  const [selectedFY, setSelectedFY] = useState<string>("all");
   const { toast } = useToast();
+
+  const financialYears = useMemo(
+    () => (allTaxLots ? getAvailableFinancialYears(allTaxLots) : []),
+    [allTaxLots]
+  );
+
+  const filteredLots = useMemo(() => {
+    if (!allTaxLots) return null;
+    if (selectedFY === "all") return allTaxLots;
+    const fy = financialYears.find((f) => f.label === selectedFY);
+    return fy ? filterByFinancialYear(allTaxLots, fy) : allTaxLots;
+  }, [allTaxLots, selectedFY, financialYears]);
+
+  const summary = useMemo(
+    () => (filteredLots ? calculateSummary(filteredLots, allTransactions) : null),
+    [filteredLots, allTransactions]
+  );
+
+  const { gains, losses } = useMemo(
+    () => (filteredLots ? calculateCoinSummaries(filteredLots) : { gains: [], losses: [] }),
+    [filteredLots]
+  );
 
   const handleFile = async (file: File) => {
     setIsLoading(true);
@@ -27,12 +49,9 @@ const Index = () => {
         return;
       }
       const lots = calculateTaxLots(transactions);
-      const sum = calculateSummary(lots, transactions);
-      const { gains: g, losses: l } = calculateCoinSummaries(lots);
-      setTaxLots(lots);
-      setSummary(sum);
-      setGains(g);
-      setLosses(l);
+      setAllTaxLots(lots);
+      setAllTransactions(transactions);
+      setSelectedFY("all");
       toast({ title: `Processed ${transactions.length} transactions → ${lots.length} tax lots` });
     } catch (err: any) {
       toast({ title: "Error parsing CSV", description: err.message, variant: "destructive" });
@@ -53,8 +72,15 @@ const Index = () => {
               CoinSpot FIFO capital gains — 100% client-side
            </p>
           </div>
-          {summary && taxLots && (
-            <ExportMenu taxLots={taxLots} summary={summary} />
+          {summary && filteredLots && (
+            <div className="flex items-center gap-2">
+              <FinancialYearSelector
+                financialYears={financialYears}
+                selected={selectedFY}
+                onSelect={setSelectedFY}
+              />
+              <ExportMenu taxLots={filteredLots} summary={summary} />
+            </div>
           )}
         </div>
       </header>
@@ -62,11 +88,11 @@ const Index = () => {
       <main className="container mx-auto space-y-6 px-4 py-6">
         <CsvUpload onFileSelect={handleFile} isLoading={isLoading} />
 
-        {summary && taxLots && (
+        {summary && filteredLots && (
           <>
             <SummaryCards summary={summary} />
             <PerformanceTables gains={gains} losses={losses} />
-            <TaxLedger lots={taxLots} />
+            <TaxLedger lots={filteredLots} />
           </>
         )}
       </main>
