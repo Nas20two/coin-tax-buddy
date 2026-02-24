@@ -6,6 +6,7 @@ import { CsvUpload } from "@/components/CsvUpload";
 import { SummaryCards } from "@/components/SummaryCards";
 import { PerformanceTables } from "@/components/PerformanceTables";
 import { TaxLedger } from "@/components/TaxLedger";
+import { ExportMenu } from "@/components/ExportMenu";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -50,8 +51,11 @@ const Index = () => {
             </h1>
             <p className="text-xs text-muted-foreground">
               CoinSpot FIFO capital gains — 100% client-side
-            </p>
+           </p>
           </div>
+          {summary && taxLots && (
+            <ExportMenu taxLots={taxLots} summary={summary} />
+          )}
         </div>
       </header>
 
