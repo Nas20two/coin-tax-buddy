@@ -6,6 +6,7 @@ import { CsvUpload } from "@/components/CsvUpload";
 import { SummaryCards } from "@/components/SummaryCards";
 import { PerformanceTables } from "@/components/PerformanceTables";
 import { TaxLedger } from "@/components/TaxLedger";
+import { GainsChart } from "@/components/GainsChart";
 import { ExportMenu } from "@/components/ExportMenu";
 import { FinancialYearSelector } from "@/components/FinancialYearSelector";
 import { useToast } from "@/hooks/use-toast";
@@ -91,6 +92,7 @@ const Index = () => {
         {summary && filteredLots && (
           <>
             <SummaryCards summary={summary} />
+            <GainsChart taxLots={filteredLots} />
             <PerformanceTables gains={gains} losses={losses} />
             <TaxLedger lots={filteredLots} />
           </>
