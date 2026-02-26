@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# Pocket CGT - Crypto Capital Gains Tax Calculator
 
-## Project info
+A free, privacy-focused crypto tax calculator for Australian taxpayers. Built to avoid paying $75/year to Koinly for a simple tax report.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Live Demo:** https://pocket-cgt-clean.vercel.app  
+**Original Lovable Build:** https://pocketcryptocgt.lovable.app/
 
-## How can I edit this code?
+## 🚀 Why I Built This
 
-There are several ways of editing your application.
+I needed to report crypto capital gains to the ATO for the 2024-2025 financial year. My accountant told me to use Koinly, which charges **$75 AUD per year** just to generate a basic report.
 
-**Use Lovable**
+Since I had credits on Lovable, I decided to build my own solution in a weekend. Now I own the code completely, and you can use it too — for free.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## ✨ Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- **CoinSpot CSV Import** - Upload your transaction history directly
+- **CGT Calculation** - Automatic calculation of capital gains/losses
+- **ATO-Compliant Reports** - Generate reports ready for your accountant
+- **Privacy-First** - Your data never leaves your device (client-side processing)
+- **PWA Support** - Install as an app on your phone for offline access
+- **Mobile-First Design** - Clean, simple interface optimized for mobile
 
-**Use your preferred IDE**
+## 🛠️ Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend:** React 18 + TypeScript
+- **Styling:** Tailwind CSS + shadcn/ui
+- **Build Tool:** Vite
+- **PWA:** Offline-capable with service worker
+- **CSV Parsing:** PapaParse
+- **PDF Export:** jsPDF
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚀 Getting Started
 
-Follow these steps:
+```bash
+# Clone the repository
+git clone https://github.com/Nas20two/coin-tax-buddy.git
+cd coin-tax-buddy
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## 📊 How It Works
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. **Export from CoinSpot** - Download your transaction CSV
+2. **Import to Pocket CGT** - Upload the CSV file
+3. **Review Transactions** - Check buy/sell entries
+4. **Generate Report** - Get your CGT summary for the ATO
+5. **Send to Accountant** - Or use for DIY tax filing
 
-**Use GitHub Codespaces**
+## 💰 Compare to Alternatives
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| Tool | Price | Notes |
+|------|-------|-------|
+| **Koinly** | $75/year | Popular, but expensive for basic needs |
+| **CoinTracker** | $60-200/year | US-focused, limited AU support |
+| **Pocket CGT** | **Free** | Built for Australian taxpayers |
 
-## What technologies are used for this project?
+## 🗺️ Roadmap
 
-This project is built with:
+- [x] CoinSpot CSV import
+- [x] Basic CGT calculation
+- [x] PDF report generation
+- [ ] Support for Binance CSV format
+- [ ] Support for Coinbase CSV format
+- [ ] Custom domain (pocketcgt.com?)
+- [ ] Multi-year tax reporting
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📄 License
 
-## How can I deploy this project?
+MIT License - feel free to use, modify, and distribute.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+**Built by:** NaSy Hub  
+**Portfolio:** https://nasyhub-olve.vercel.app  
+**Contact:** nasiruddin.syed@hotmail.com
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+*"Built to solve my own problem. Sharing it in case it helps you too."*
