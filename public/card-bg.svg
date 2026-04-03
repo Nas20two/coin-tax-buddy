@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="cryptoPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+      <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+      <path d="M20 50 L35 50 M65 50 L80 50 M50 20 L50 35 M50 65 L50 80" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#goldGradient)"/>
+  <rect width="800" height="450" fill="url(#cryptoPattern)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="100" cy="100" r="60" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="700" cy="350" r="80" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="650" cy="80" r="40" fill="rgba(255,255,255,0.12)"/>
+  <circle cx="150" cy="380" r="50" fill="rgba(255,255,255,0.06)"/>
+  
+  <!-- Coin icon in center -->
+  <g transform="translate(400, 225)">
+    <circle cx="0" cy="0" r="70" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+    <circle cx="0" cy="0" r="55" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+    <text x="0" y="20" font-family="Arial, sans-serif" font-size="60" font-weight="bold" text-anchor="middle" fill="rgba(255,255,255,0.9)">$</text>
+  </g>
+</svg>
