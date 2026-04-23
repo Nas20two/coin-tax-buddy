@@ -28,7 +28,8 @@ const features: PricingFeature[] = [
 
 export default function Pricing() {
   const [isLoading, setIsLoading] = useState(false);
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
+  // Only yearly pricing - no monthly option
+const billingCycle = 'yearly';
 
   const handleSubscribe = async () => {
     setIsLoading(true);
@@ -43,9 +44,7 @@ export default function Pricing() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          priceId: billingCycle === 'yearly' 
-            ? 'price_yearly_aud'  // Your Stripe price ID
-            : 'price_monthly_aud',
+          priceId: 'price_1TBm910r44KWiPLvZGBhZYlE',  // Your Stripe yearly price ID
         }),
       });
 
@@ -78,33 +77,11 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Billing Toggle */}
-        <div className="mt-8 flex justify-center">
-          <div className="relative bg-white rounded-lg p-1 flex sm:bg-gray-100">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`${
-                billingCycle === 'monthly'
-                  ? 'bg-white shadow-sm text-gray-900'
-                  : 'text-gray-500'
-              } relative rounded-md py-2 px-6 text-sm font-medium transition-colors`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle('yearly')}
-              className={`${
-                billingCycle === 'yearly'
-                  ? 'bg-white shadow-sm text-gray-900'
-                  : 'text-gray-500'
-              } relative rounded-md py-2 px-6 text-sm font-medium transition-colors`}
-            >
-              Yearly
-              <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-                Save 20%
-              </span>
-            </button>
-          </div>
+        {/* Yearly Pricing Only */}
+        <div className="mt-8 text-center">
+          <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+            Yearly subscription - Best value
+          </span>
         </div>
 
         {/* Pricing Cards */}
@@ -150,16 +127,12 @@ export default function Pricing() {
                 For serious crypto investors
               </p>
               <p className="mt-4">
-                <span className="text-4xl font-extrabold text-gray-900">
-                  ${billingCycle === 'yearly' ? '14.99' : '1.99'}
-                </span>
-                <span className="text-base font-medium text-gray-500">/month</span>
+                <span className="text-4xl font-extrabold text-gray-900">$29</span>
+                <span className="text-base font-medium text-gray-500">/year</span>
               </p>
-              {billingCycle === 'yearly' && (
-                <p className="mt-1 text-sm text-gray-500">
-                  Billed annually ($179.88/year)
-                </p>
-              )}
+              <p className="mt-1 text-sm text-gray-500">
+                Less than $2.50/month
+              </p>
               <button
                 onClick={handleSubscribe}
                 disabled={isLoading}
