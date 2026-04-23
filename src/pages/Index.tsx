@@ -10,6 +10,8 @@ import { GainsChart } from "@/components/GainsChart";
 import { ExportMenu } from "@/components/ExportMenu";
 import { FinancialYearSelector } from "@/components/FinancialYearSelector";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Crown, User } from "lucide-react";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,16 +75,28 @@ const Index = () => {
               CoinSpot FIFO capital gains — 100% client-side
            </p>
           </div>
-          {summary && filteredLots && (
-            <div className="flex items-center gap-2">
-              <FinancialYearSelector
-                financialYears={financialYears}
-                selected={selectedFY}
-                onSelect={setSelectedFY}
-              />
-              <ExportMenu taxLots={filteredLots} summary={summary} />
-            </div>
-          )}
+          <div className="flex items-center gap-2">
+            <a href="/pricing">
+              <Button variant="outline" size="sm" className="gap-1">
+                <Crown className="h-4 w-4 text-yellow-500" />
+                Upgrade
+              </Button>
+            </a>
+            <Button variant="ghost" size="sm" className="gap-1">
+              <User className="h-4 w-4" />
+              Account
+            </Button>
+            {summary && filteredLots && (
+              <>
+                <FinancialYearSelector
+                  financialYears={financialYears}
+                  selected={selectedFY}
+                  onSelect={setSelectedFY}
+                />
+                <ExportMenu taxLots={filteredLots} summary={summary} />
+              </>
+            )}
+          </div>
         </div>
       </header>
 
